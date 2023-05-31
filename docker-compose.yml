@@ -1,0 +1,57 @@
+version: '3.1'
+
+networks:
+  bevflix:
+    name: bevflix
+
+services:
+  bevflix.mongo:
+    container_name: bevflix.mongo
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - ./backend/mongodata:/data/db
+    networks:
+      - bevflix
+
+  bevflix.mongo-express:
+    container_name: bevflix.mongo-express
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@bevflix.mongo:27017/
+    depends_on:
+      - bevflix.mongo
+    networks:
+      - bevflix
+
+  bevflix.api:
+    container_name: bevflix-api
+    build:
+      context: ./backend
+    ports:
+      - 0.0.0.0:8000:8000
+    volumes:
+      - ./backend/app:/app
+    environment:
+      - MONGO_CONNSTRING=mongodb://root:root@bevflix.mongo:27017/
+      - MONGO_BEVFLIX=MDB_BEVFLIX
+      - LOG_LEVEL=INFO
+      - TOKEN_SECRET_KEY=thisisasupersecrettocreatejwttoken
+      - TOKEN_EXPIRES_AT_IN_MINUTES=10
+    restart: always
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --reload"
+    depends_on:
+      - bevflix.mongo
+    networks:
+      - bevflix
+        
