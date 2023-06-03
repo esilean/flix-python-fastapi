@@ -54,4 +54,20 @@ services:
       - bevflix.mongo
     networks:
       - bevflix
+    
+  bevflix.web:
+    container_name: bevflix-web
+    build: 
+      context: ./frontend
+    ports:
+      - 0.0.0.0:3000:3000
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+    depends_on:
+      - bevflix.api
+    networks:
+      - bevflix
         

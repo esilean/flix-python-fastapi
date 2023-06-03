@@ -6,7 +6,7 @@ from passlib.hash import pbkdf2_sha256
 
 from app.configs.errors import BadRequest
 
-from app.entities.users.user import User
+from app.domains.entities.users.user import User
 from app.use_cases.users.signup.schemas.signup_user import UserSignUpRequest, UserSignUpResponse
 
 from app.data.repositories.user import UserRepository

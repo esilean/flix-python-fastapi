@@ -1,6 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
-from app.entities.users.user import User
+from app.domains.entities.users.user import User
 
 from app.use_cases.users.list.schemas.list_users import UserListRequest, UserListResponse, UserListResponseDetail
 

@@ -12,6 +12,7 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from app.routes.deps.permissions_checker import PermissionChecker
 from app.routes.v1.users.users_routes import router as users_routes
 from app.routes.v1.auth.auth_routes import router as auth_routes
+from app.routes.v1.movies.movies_routes import router as movies_routes
 
 from app.data.mongo_connection import get_db_bevflix, connect_and_init_db, close_db
 
@@ -90,3 +91,4 @@ async def health_check(__: bool = Depends(PermissionChecker(required_permissions
 
 app.include_router(auth_routes)
 app.include_router(users_routes)
+app.include_router(movies_routes)

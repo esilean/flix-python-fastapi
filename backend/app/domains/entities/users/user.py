@@ -11,6 +11,7 @@ class User(MongoModel, BaseModel):
     id: str = Field(default_factory=uuid.uuid4)
     username: str = Field(...)
     email: str = Field(...)
+    image: str = Field(...)
     password: str = Field(...)
     created_at: datetime = Field(...)
     updated_at: datetime = Field(...)

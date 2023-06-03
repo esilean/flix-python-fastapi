@@ -1,7 +1,7 @@
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
 
-from app.entities.users.user import User
+from app.domains.entities.users.user import User
 
 class UserRepository:
     def __init__(self, db_bevflix: AsyncIOMotorDatabase):
